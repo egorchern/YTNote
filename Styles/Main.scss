@@ -1,0 +1,72 @@
+%align_content_horizontally{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+%align_content_perfectly{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+
+
+
+body,
+html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#body_wrapper {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+$nav_font_size: max(1.8rem, calc(1.4rem + 0.4vw));
+$nav_background_color: hsl(0,2%,20%);
+$nav_font_color: hsl(0, 2%, 98%);
+$nav_padding: 12px;
+
+nav{
+    
+    display: inline-flex;
+    flex-flow: column wrap;
+    align-items: center;
+    background-color: $nav_background_color;
+    padding: $nav_padding;
+    overflow-y: auto;
+    height:100vh;
+    
+    .nav_item{
+        width: 100%;
+        cursor: pointer;
+        color: $nav_font_color;
+        transition: all 0.3s;
+        padding: 10px;
+        @extend %align_content_perfectly;
+        svg{
+            float:left;
+            width: $nav_font_size;
+            height: $nav_font_size;
+        }
+        
+        span{
+            margin-left: 8px;
+            font-family: "Lato", "Roboto", sans-serif;
+            font-size: $nav_font_size;
+        }
+    }
+    .nav_item:hover{
+        background-color: $nav_font_color;
+        color: $nav_background_color;
+    }
+}
+

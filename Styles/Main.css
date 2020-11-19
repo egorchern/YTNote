@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,400;0,500;1,400;1,500&display=swap");
+nav .nav_item {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#body_wrapper {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+nav {
+  display: inline-flex;
+  flex-flow: column wrap;
+  align-items: center;
+  background-color: #343232;
+  padding: 12px;
+  overflow-y: auto;
+  height: 100vh;
+}
+nav .nav_item {
+  width: 100%;
+  cursor: pointer;
+  color: #fafafa;
+  transition: all 0.3s;
+  padding: 10px;
+}
+nav .nav_item svg {
+  float: left;
+  width: max(1.8rem, calc(1.4rem + 0.4vw));
+  height: max(1.8rem, calc(1.4rem + 0.4vw));
+}
+nav .nav_item span {
+  margin-left: 8px;
+  font-family: "Lato", "Roboto", sans-serif;
+  font-size: max(1.8rem, calc(1.4rem + 0.4vw));
+}
+nav .nav_item:hover {
+  background-color: #fafafa;
+  color: #343232;
+}
