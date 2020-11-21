@@ -36,16 +36,20 @@ $nav_font_color: hsl(0, 2%, 98%);
 $nav_padding: 14px;
 
 nav{
-    
+    position: relative;
     display: inline-flex;
     flex-flow: column wrap;
     align-items: center;
     background-color: $nav_background_color;
     padding: $nav_padding;
     overflow-y: auto;
+    overflow-x:hidden;
     height:100vh;
     float:right;
     color: $nav_font_color;
+    width:20%;
+    min-width:168px;
+    max-width: 240px;
     span{
         font-family: "Lato", "Roboto", sans-serif;
         font-size: $nav_font_size;
@@ -73,9 +77,9 @@ nav{
         color: $nav_background_color;
     }
     .nav_icon{
-        max-width:140px;
+        max-width:100%;
         img{
-            max-width:100%;
+            max-width:75%;
             cursor:pointer;
         }
         @extend %align_content_perfectly;
@@ -86,21 +90,70 @@ nav{
     #expand_nav_btn{
         display:none;
     }
-    .nav_control{
+    
+    #bottom_buttons_container{
+        position: absolute;
+        bottom: 8px;
+        display:flex;
+        flex-flow: row wrap;
+        svg{
+            
+            width: max(24px, calc((20px + 0.4vw) * 1.65));
+            height: max(24px, calc((20px + 0.4vw) * 1.65));
+            /*
+            width:30%;
+            height:30%;
+            */
+        }
+    }
+    .button_control{
         transition: all 0.3s;
         padding: 8px;
         border-radius: 4px;
         cursor:pointer;
-        position: absolute;
-        bottom: 8px;
-        svg{
-            width: max(24px, calc((20px + 0.4vw) * 1.65));
-            height: max(24px, calc((20px + 0.4vw) * 1.65));
-        }
+        
     }
-    .nav_control:hover{
+    .button_control:hover{
         background-color: $nav_font_color;
         color: $nav_background_color;
+    }
+}
+nav.float_left{
+    float:left;
+    #nav_float_left{
+        display:none;
+    }
+    #nav_float_right{
+        display:block;
+    }
+}
+nav.float_right{
+    float:right;
+    #nav_float_left{
+        display:block;
+    }
+    #nav_float_right{
+        display:none;
+    }
+}
+nav.collapsed{
+    width: unset;
+    min-width:78px;
+    > *{
+        display:none;
+    }
+    
+    #expand_nav_btn{
+        display: block;
+    }
+    #collapse_nav_btn{
+        display:none;
+    }
+    #nav_float_left{
+        display:none;
+    }
+    #nav_float_right{
+        display:none;
     }
 }
 
