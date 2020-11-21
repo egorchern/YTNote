@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,400;0,500;1,400;1,500&display=swap");
-nav .nav_icon, nav .nav_item {
+nav #notes_container, nav .nav_icon, nav .nav_item {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
@@ -34,7 +34,8 @@ nav {
   color: #fafafa;
   width: 17%;
   min-width: 168px;
-  max-width: 230px;
+  max-width: 215px;
+  word-break: break-all;
 }
 nav span {
   font-family: "Lato", "Roboto", sans-serif;
@@ -70,6 +71,16 @@ nav .nav_icon img {
 }
 nav #expand_nav_btn {
   display: none;
+}
+nav #notes_container {
+  display: none;
+  margin-top: 8px;
+}
+nav #notes_container span {
+  font-size: max(18px, calc(14px + 0.4vw));
+}
+nav #notes_container.shown {
+  display: flex;
 }
 nav #bottom_buttons_container {
   position: absolute;
@@ -121,17 +132,20 @@ nav.collapsed {
   min-width: 78px;
 }
 nav.collapsed > * {
-  display: none;
+  display: none !important;
+}
+nav.collapsed #bottom_buttons_container {
+  display: block !important;
 }
 nav.collapsed #expand_nav_btn {
-  display: block;
+  display: block !important;
 }
 nav.collapsed #collapse_nav_btn {
-  display: none;
+  display: none !important;
 }
 nav.collapsed #nav_float_left {
-  display: none;
+  display: none !important;
 }
 nav.collapsed #nav_float_right {
-  display: none;
+  display: none !important;
 }
