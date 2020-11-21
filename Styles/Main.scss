@@ -42,14 +42,13 @@ nav{
     align-items: center;
     background-color: $nav_background_color;
     padding: $nav_padding;
-    overflow-y: auto;
-    overflow-x:hidden;
+    overflow:auto;
     height:100vh;
     float:right;
     color: $nav_font_color;
-    width:20%;
+    width:17%;
     min-width:168px;
-    max-width: 240px;
+    max-width: 230px;
     span{
         font-family: "Lato", "Roboto", sans-serif;
         font-size: $nav_font_size;

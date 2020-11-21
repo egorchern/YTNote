@@ -28,14 +28,13 @@ nav {
   align-items: center;
   background-color: #343232;
   padding: 14px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: auto;
   height: 100vh;
   float: right;
   color: #fafafa;
-  width: 20%;
+  width: 17%;
   min-width: 168px;
-  max-width: 240px;
+  max-width: 230px;
 }
 nav span {
   font-family: "Lato", "Roboto", sans-serif;
