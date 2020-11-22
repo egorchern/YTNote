@@ -8,11 +8,15 @@
     <link rel="icon" href="Images/logo.png">
     
     <script src="Scripts/Main.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
     
 </head>
 <body>
     <div id="body_wrapper" style="visibility: hidden;">
         <nav>
+            
+
+            
             <div class="nav_icon">
                 <img src="Images/logo.png">
                 <span>YTNote</span>
@@ -102,5 +106,45 @@
             
             
         </nav>
+        <main>
+            <div id="player_div">
+                
+            </div>
+            <div id="notes_div">
+                <p>HHHAHFHHAFHFAHFHFA</p>
+            </div>
+            <div id="input_div">
+                <p>HHHAHFHHAFHFAHFHFA</p>
+            </div>
+            <div class = "modall">
+                <span id="close_modall">×</span>
+                <div class="modall-content">
+                    <form id="search_form">
+
+                        <div class="form-group">
+                            <label>Note heading name</label>
+                            <input class="form-control" id="heading_input" >
+                        </div>
+
+                        <div class="form-group" id="search_form_group" >
+                            
+                            <label>Youtube video link</label>
+                            <div style="position:relative;width:100%;">
+                                <input class="form-control" id="search_input" >
+                                
+                            </div>
+                            <p style="color:green"></p>
+                            
+                            
+                        </div>
+                        <button type="button" class="btn btn-primary" id="create_note_btn">
+                            Create
+                        </button>
+                        
+                    </form>
+                </div>
+            </div>
+        </main>
+        
     </div>
 </body>

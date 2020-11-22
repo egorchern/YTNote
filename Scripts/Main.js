@@ -1,7 +1,40 @@
 let nav_float_state;
-
+let all_notes_data;
+// each note_data: note_heading_name, youtube_id, video_time, notes_text_array, notes_time_array, current_text
 function $(selector){
     return document.querySelector(selector);
+}
+
+
+function extract_youtube_id(str){
+
+    let arr = str.match(/^https:\/\/www\.youtube\.com\/watch\?v=(?<id>[^?]+)/);
+    if(arr != null){
+        return arr[1];
+    }
+    else{
+        return null;
+    }
+}
+
+// initialize new note in the all_notes_data array
+function add_new_note(){
+    let youtube_link = $('#search_input').value;
+    let note_heading_name = $('#heading_input').value;
+    if(youtube_link != "" && note_heading_name != ""){
+        let youtube_id = extract_youtube_id(youtube_link);
+        
+        if(youtube_id != null){
+            
+        }
+        else{
+            alert("Invalid link inputted. Only input a valid youtube link such as: https://www.youtube.com/watch?v=uE1QkcG1-AM");
+        }
+    }
+    else{
+        alert("Some fields were left empty. Please fill all of the fields.");
+    }
+    
 }
 
 // Retrieve preffered float type for nav from local storage
@@ -66,6 +99,15 @@ function init(){
     }
     $("#expand_notes").onclick = function(ev){
         $("#notes_container").classList.toggle("shown");
+    }
+    $('#note_add_new').onclick = function(ev){
+        $(".modall").style.display = "flex";
+    }
+    $('#close_modall').onclick = function(ev){
+        $(".modall").style.display = "none";
+    }
+    $('#create_note_btn').onclick = function(){
+        add_new_note();
     }
     $("#body_wrapper").style.visibility = "visible";
 }

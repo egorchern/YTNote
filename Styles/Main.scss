@@ -1,18 +1,10 @@
-%align_content_horizontally{
-    display:flex;
-    flex-flow: row wrap;
-    justify-content: center;
+@use "Nav";
+@use "Modall";
+%cool_borders{
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border: 1.5px solid rgba(0, 0, 0, 0.125);
 }
-
-%align_content_perfectly{
-    display:flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    align-items: center;
-}
-
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,400;0,500;1,400;1,500&display=swap');
-
 
 
 body,
@@ -26,149 +18,61 @@ html {
 #body_wrapper {
     width: 100%;
     height: 100%;
+    /*background-color: hsl(0deg, 0%, 90%);*/
+    background-color: hsl(0,0%,9%);
     overflow-x: hidden;
     overflow-y: auto;
 }
-
-$nav_font_size: max(24px, calc(20px + 0.4vw));
-$nav_background_color: hsl(0,2%,20%);
-$nav_note_font_size: max(18px, calc(14px + 0.4vw));
-$nav_font_color: hsl(0, 2%, 98%);
-$nav_padding: 14px;
-
-nav{
-    position: relative;
-    display: inline-flex;
-    flex-flow: column wrap;
-    align-items: center;
-    background-color: $nav_background_color;
-    padding: $nav_padding;
-    overflow:auto;
-    height:100vh;
-    float:right;
-    color: $nav_font_color;
-    width:17%;
-    min-width:168px;
-    max-width: 215px;
-    word-break: break-all;
-    span{
-        font-family: "Lato", "Roboto", sans-serif;
-        font-size: $nav_font_size;
+*{
+    font-family: "Lato";
+}
+main{
+    display: grid;
+    height:100%;
+    padding: 1.3vw;
+    grid-template-rows: 3fr 1fr;
+    grid-template-columns: 65fr 35fr;
+    column-gap: 1.5vw;
+    row-gap: 3vh;
+   *{
+       font-size: 1rem;
+   }
+    > div{
+        /*@extend %cool_borders;*/
+        padding: 12px;
+        background-color: hsla(0,0%,31%);
+        color: hsl(0, 2%, 98%);
+        border-radius: 8px;
     }
-    .nav_item{
-        width: 100%;
-        cursor: pointer;
-        border-radius: 4px;
-        transition: all 0.3s;
-        padding: 8px;
+    #input_div{
+        grid-column: 1 / 3;
+    }
+    #search_form{
+        height: 100%;
+        padding:12px;
         @extend %align_content_perfectly;
-        svg{
-            
-            width: $nav_font_size;
-            height: $nav_font_size;
+        label{
+            font-size: max(24px, calc(20px + 0.4vw));
+            overflow: auto;
+        }
+        input{
+            font-size: max(20px, calc(16px + 0.4vw))
         }
         
-        span{
-            margin-left: 8px;
-            
+        >div{
+            width:100%;
+            @extend %align_content_perfectly;
+        }
+        #create_note_btn{
+            padding: 10px;
+            font-size: max(24px, calc(20px + 0.4vw));
+            margin-top: 2vh;
+            width: 40%;
+            min-width: 100px;
+            max-width: 200px;
         }
     }
-    .nav_item:hover{
-        background-color: $nav_font_color;
-        color: $nav_background_color;
-    }
-    .nav_icon{
-        max-width:100%;
-        img{
-            max-width:75%;
-            cursor:pointer;
-        }
-        @extend %align_content_perfectly;
-        padding-bottom: 6px;
-        border-bottom: 2px solid hsl(0,2%, 78%);
-        margin-bottom: 9px;
-    }
-    #expand_nav_btn{
-        display:none;
-    }
-    #notes_container{
-        @extend %align_content_perfectly;
-        display:none;
-        margin-top:8px;
-        span{
-            font-size: $nav_note_font_size;
-        }
-    }
-    #notes_container.shown{
-        display:flex;
-    }
-    #bottom_buttons_container{
-        position: absolute;
-        bottom: 8px;
-        display:flex;
-        flex-flow: row wrap;
-        svg{
-            
-            width: max(24px, calc((20px + 0.4vw) * 1.65));
-            height: max(24px, calc((20px + 0.4vw) * 1.65));
-            /*
-            width:30%;
-            height:30%;
-            */
-        }
-    }
-    .button_control{
-        transition: all 0.3s;
-        padding: 8px;
-        border-radius: 4px;
-        cursor:pointer;
-        
-    }
-    .button_control:hover{
-        background-color: $nav_font_color;
-        color: $nav_background_color;
-    }
-    
 }
-nav.float_left{
-    float:left;
-    #nav_float_left{
-        display:none;
-    }
-    #nav_float_right{
-        display:block;
-    }
-}
-nav.float_right{
-    float:right;
-    #nav_float_left{
-        display:block;
-    }
-    #nav_float_right{
-        display:none;
-    }
-}
-nav.collapsed{
-    width: unset;
-    min-width:78px;
-    > *{
-        display:none !important;
-    }
-    #bottom_buttons_container{
-        display: block !important;
-    }
-    #expand_nav_btn{
-        display: block !important;
-    }
-    #collapse_nav_btn{
-        display:none !important;
-    }
-    #nav_float_left{
-        display:none !important;
-    }
-    #nav_float_right{
-        display:none !important;
-    }
-}
+
 
 
