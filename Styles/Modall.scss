@@ -17,7 +17,7 @@
 
 
     overflow-y: auto;
-    #close_modall{
+    .close_modall{
         user-select: none;
         color: #bbb;
         position: fixed;
@@ -29,7 +29,7 @@
         cursor: pointer;
         text-decoration: none;
     }
-    #close_modall:hover{
+    .close_modall:hover{
         color: #f1f1f1;
     }
 }

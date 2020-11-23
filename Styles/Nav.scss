@@ -33,31 +33,10 @@ nav{
     max-width: 215px;
     word-break: break-all;
     span{
-        font-family: "Lato", "Roboto", sans-serif;
+        
         font-size: $nav_font_size;
     }
-    .nav_item{
-        width: 100%;
-        cursor: pointer;
-        border-radius: 4px;
-        transition: all 0.25s;
-        padding: 8px;
-        @extend %align_content_perfectly;
-        svg{
-            
-            width: $nav_font_size;
-            height: $nav_font_size;
-        }
-        
-        span{
-            margin-left: 8px;
-            
-        }
-    }
-    .nav_item:hover{
-        background-color: $nav_font_color;
-        color: $nav_background_color;
-    }
+    
     .nav_icon{
         max-width:100%;
         img{
@@ -75,7 +54,9 @@ nav{
     #notes_container{
         @extend %align_content_perfectly;
         display:none;
-        margin-top:8px;
+        margin-top:9px;
+        border-top: 2px solid hsl(0,2%, 78%);
+        padding-top:6px;
         span{
             font-size: $nav_note_font_size;
         }
@@ -99,7 +80,7 @@ nav{
         }
     }
     .button_control{
-        transition: all 0.25s;
+        transition: all 0.2s;
         padding: 8px;
         border-radius: 4px;
         cursor:pointer;
@@ -110,6 +91,34 @@ nav{
         color: $nav_background_color;
     }
     
+}
+.nav_item{
+    width: 100%;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+    padding: 8px;
+    margin-top:2px;
+    @extend %align_content_perfectly;
+    svg{
+        
+        width: $nav_font_size;
+        height: $nav_font_size;
+    }
+    
+    span{
+
+        margin-left: 8px;
+        
+    }
+}
+.nav_item:hover{
+    background-color: $nav_font_color;
+    color: $nav_background_color;
+}
+.nav_item.selected{
+    background-color: $nav_font_color;
+    color: $nav_background_color;
 }
 nav.float_left{
     float:left;

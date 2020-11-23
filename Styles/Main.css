@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,400;0,500;1,400;1,500&display=swap");
-main #search_form, main #search_form > div, nav #notes_container, nav .nav_icon, nav .nav_item {
+main #search_form, main #delete_container, main #search_form > div, main #delete_container > div, .nav_item, nav #notes_container, nav .nav_icon {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
@@ -23,26 +23,7 @@ nav {
   word-break: break-all;
 }
 nav span {
-  font-family: "Lato", "Roboto", sans-serif;
   font-size: max(24px, calc(20px + 0.4vw));
-}
-nav .nav_item {
-  width: 100%;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: all 0.25s;
-  padding: 8px;
-}
-nav .nav_item svg {
-  width: max(24px, calc(20px + 0.4vw));
-  height: max(24px, calc(20px + 0.4vw));
-}
-nav .nav_item span {
-  margin-left: 8px;
-}
-nav .nav_item:hover {
-  background-color: #fafafa;
-  color: #343232;
 }
 nav .nav_icon {
   max-width: 100%;
@@ -59,7 +40,9 @@ nav #expand_nav_btn {
 }
 nav #notes_container {
   display: none;
-  margin-top: 8px;
+  margin-top: 9px;
+  border-top: 2px solid #c8c6c6;
+  padding-top: 6px;
 }
 nav #notes_container span {
   font-size: max(18px, calc(14px + 0.4vw));
@@ -82,12 +65,38 @@ nav #bottom_buttons_container svg {
   */
 }
 nav .button_control {
-  transition: all 0.25s;
+  transition: all 0.2s;
   padding: 8px;
   border-radius: 4px;
   cursor: pointer;
 }
 nav .button_control:hover {
+  background-color: #fafafa;
+  color: #343232;
+}
+
+.nav_item {
+  width: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+  padding: 8px;
+  margin-top: 2px;
+}
+.nav_item svg {
+  width: max(24px, calc(20px + 0.4vw));
+  height: max(24px, calc(20px + 0.4vw));
+}
+.nav_item span {
+  margin-left: 8px;
+}
+
+.nav_item:hover {
+  background-color: #fafafa;
+  color: #343232;
+}
+
+.nav_item.selected {
   background-color: #fafafa;
   color: #343232;
 }
@@ -152,7 +161,7 @@ nav.collapsed #nav_float_right {
   /* Black w/ opacity */
   overflow-y: auto;
 }
-.modall #close_modall {
+.modall .close_modall {
   user-select: none;
   color: #bbb;
   position: fixed;
@@ -164,7 +173,7 @@ nav.collapsed #nav_float_right {
   cursor: pointer;
   text-decoration: none;
 }
-.modall #close_modall:hover {
+.modall .close_modall:hover {
   color: #f1f1f1;
 }
 
@@ -206,7 +215,7 @@ html {
 }
 
 * {
-  font-family: "Lato";
+  font-family: "Lato", sans-serif;
 }
 
 main {
@@ -231,21 +240,20 @@ main > div {
 main #input_div {
   grid-column: 1/3;
 }
-main #search_form {
+main #search_form, main #delete_container {
   height: 100%;
   padding: 12px;
 }
-main #search_form label {
+main #search_form label, main #search_form p, main #delete_container label, main #delete_container p {
   font-size: max(24px, calc(20px + 0.4vw));
-  overflow: auto;
 }
-main #search_form input {
+main #search_form input, main #search_form span, main #delete_container input, main #delete_container span {
   font-size: max(20px, calc(16px + 0.4vw));
 }
-main #search_form > div {
+main #search_form > div, main #delete_container > div {
   width: 100%;
 }
-main #search_form #create_note_btn {
+main #search_form button, main #delete_container button {
   padding: 10px;
   font-size: max(24px, calc(20px + 0.4vw));
   margin-top: 2vh;

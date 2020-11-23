@@ -25,7 +25,7 @@ html {
     overflow-y: auto;
 }
 *{
-    font-family: "Lato";
+    font-family: "Lato", sans-serif;
 }
 main{
     display: grid;
@@ -48,23 +48,24 @@ main{
     #input_div{
         grid-column: 1 / 3;
     }
-    #search_form{
+    #search_form, #delete_container{
         height: 100%;
         padding:12px;
         @extend %align_content_perfectly;
-        label{
+        label, p{
             font-size: max(24px, calc(20px + 0.4vw));
-            overflow: auto;
+            
         }
-        input{
+        input, span{
             font-size: max(20px, calc(16px + 0.4vw))
+
         }
         
         >div{
             width:100%;
             @extend %align_content_perfectly;
         }
-        #create_note_btn{
+        button{
             padding: 10px;
             font-size: max(24px, calc(20px + 0.4vw));
             margin-top: 2vh;
@@ -73,6 +74,7 @@ main{
             max-width: 200px;
         }
     }
+    
 }
 
 

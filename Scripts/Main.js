@@ -1,6 +1,6 @@
 let nav_float_state;
 let all_notes_data;
-
+let selected_indexes = [];
 
 function $(selector){
     return document.querySelector(selector);
@@ -67,7 +67,7 @@ function add_new_note(){
             let new_note = new note(note_heading_name, youtube_id);
             add_notes_data(new_note);
             set_notes_data();
-            $(".modall").style.display = "none";
+            $("#add_modall").style.display = "none";
             add_notes_to_nav();
 
         }
@@ -103,7 +103,7 @@ function set_user_preffered_float(preffered){
 function add_notes_to_nav(){
     $('#notes_container').innerHTML = "";
     let add_note_string = `
-    <div class="note nav_item" id="note_add_new">
+    <div class="nav_item" id="note_add_new">
         <svg viewBox="0 0 16 16" class="bi bi-journal-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
             <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
@@ -113,13 +113,13 @@ function add_notes_to_nav(){
     </div>
     `;
     let delete_note_string = `
-    <div class="note nav_item" id="note_delete">
+    <div class="nav_item" id="note_delete">
         <svg viewBox="0 0 16 16" class="bi bi-journal-minus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
             <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
             <path fill-rule="evenodd" d="M5.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z"/>
         </svg>
-        <span>Delete one</span>
+        <span>Delete</span>
     </div>
     `;
     let dom_string = ``;
@@ -128,36 +128,48 @@ function add_notes_to_nav(){
         dom_string += `
         <div class="note nav_item" id="note_${i}">
             <span>${note_data.note_heading_name}</span>
+            
         </div>
         `;
     }
     dom_string += add_note_string;
     dom_string += delete_note_string;
     $('#notes_container').innerHTML = dom_string;
-
+    bind_events_on_nav();
         
     
 }
 
-//Bind events for expanding, collapsing and changing float types on nav
-function init(){
-    let preffered = get_user_preffered_float();
-    if(preffered === "left"){
-        $("nav").classList.toggle("float_left");
-        nav_float_state = "left";
+// Add all notes to modall delete menu
+function add_notes_to_delete_menu(){
+    $('#notes_to_delete_container').innerHTML = "";
+    let dom_string = ``;
+    for(let i = 0; i < all_notes_data.length; i += 1){
+        let note_data = all_notes_data[i];
+        dom_string += `
+        <div class="note_to_delete nav_item" id="note_delete_${i}">
+            <span>${note_data.note_heading_name}</span>
+            
+        </div>
+        `;
     }
-    else{
-        $("nav").classList.toggle("float_right");
-        nav_float_state = "right";
+    $('#notes_to_delete_container').innerHTML = dom_string;
+}
+
+// Delete notes at indexes
+function delete_notes_at_indexes(indexes){
+    let new_list = [];
+    for(let i = 0; i < all_notes_data.length; i += 1){
+        if(indexes.includes(i) === false){
+            new_list.push(all_notes_data[i]);
+        }
     }
-    if(nav_float_state === "left"){
-        
-        $("#collapse_nav_btn").id = "expand_nav_btn";
-        $("#expand_nav_btn").id = "collapse_nav_btn";
-        
-    }
-    all_notes_data = get_notes_data();
-    add_notes_to_nav();
+    all_notes_data = new_list;
+
+}
+
+//Bind events to nav buttons
+function bind_events_on_nav(){
     $("#expand_nav_btn").onclick = function(){
         $("nav").classList.toggle("collapsed");
     }
@@ -187,14 +199,83 @@ function init(){
         $("#notes_container").classList.toggle("shown");
     }
     $('#note_add_new').onclick = function(ev){
-        $(".modall").style.display = "flex";
-    }
-    $('#close_modall').onclick = function(ev){
-        $(".modall").style.display = "none";
+        $("#add_modall").style.display = "flex";
     }
     $('#create_note_btn').onclick = function(){
         add_new_note();
     }
+    $('#note_delete').onclick = function(){
+        add_notes_to_delete_menu();
+        selected_indexes = [];
+        $('#delete_modall').style.display = "flex";
+        let notes_to_delete = document.querySelectorAll('.note_to_delete');
+    
+        notes_to_delete.forEach(function(item) {
+            
+            item.onclick = function(){
+                let {groups : {index}} = /note_delete_(?<index>\d+)/.exec(item.id);
+                index = Number(index);
+                console.log(index);
+                if(item.classList.contains("selected") === true){
+                    let index_to_delete = selected_indexes.findIndex(temp => {temp === index});
+                    selected_indexes.splice(index_to_delete);
+                }
+                else{
+                    selected_indexes.push(index);
+                }
+                item.classList.toggle("selected");
+
+            }
+        })
+        
+    }
+    $("#delete_notes_btn").onclick = function(){
+        if(selected_indexes.length === 0){
+            alert("No notes are selected to be deleated. Please select notes to delete by clicking on them, or close the delete window.");
+        }
+        else{
+            delete_notes_at_indexes(selected_indexes);
+            set_notes_data();
+            add_notes_to_nav();
+            $('#delete_modall').style.display = "none";
+        }
+        
+        
+    }
+}
+
+//Bind events for expanding, collapsing and changing float types on nav
+function init(){
+    let preffered = get_user_preffered_float();
+    if(preffered === "left"){
+        $("nav").classList.toggle("float_left");
+        nav_float_state = "left";
+    }
+    else{
+        $("nav").classList.toggle("float_right");
+        nav_float_state = "right";
+    }
+    if(nav_float_state === "left"){
+        
+        $("#collapse_nav_btn").id = "expand_nav_btn";
+        $("#expand_nav_btn").id = "collapse_nav_btn";
+        
+    }
+    
+    
+    let closes = document.querySelectorAll(".close_modall");
+    closes.forEach(close => {
+        close.onclick = function(ev){
+            close.parentElement.style.display = "none";
+        }
+        
+    })
+
+    all_notes_data = get_notes_data();
+    add_notes_to_nav();
+    
+    
+    
     $("#body_wrapper").style.visibility = "visible";
 }
 

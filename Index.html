@@ -1,154 +1,147 @@
 <!DOCTYPE html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link rel="stylesheet" href="Styles/Main.css">
-    <title>YTNote</title>
-    <link rel="icon" href="Images/logo.png">
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <link rel="stylesheet" href="Styles/Main.css">
+        <title>YTNote</title>
+        <link rel="icon" href="Images/logo.png">
+        
+        <script src="Scripts/Main.js"></script>
+        <script src="https://www.youtube.com/iframe_api"></script>
+        
+    </head>
+    <body>
+        <div id="body_wrapper" style="visibility: hidden;">
+            <nav>
+                
     
-    <script src="Scripts/Main.js"></script>
-    <script src="https://www.youtube.com/iframe_api"></script>
-    
-</head>
-<body>
-    <div id="body_wrapper" style="visibility: hidden;">
-        <nav>
-            
-
-            
-            <div class="nav_icon">
-                <img src="Images/logo.png">
-                <span>YTNote</span>
-            </div>
-            <div class="nav_item">
                 
-                
-                <svg  viewBox="0 0 16 16" class="bi bi-upload" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                    <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
-                </svg>
-                
-                
-                <span>Import</span>
-            </div>
-            <div class="nav_item">
-                
-                <svg viewBox="0 0 16 16" class="bi bi-download" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                    <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                </svg>
-                
-                <span>Export</span>
-            </div>
-            <div class="nav_item" id="expand_notes">
-                
-                <svg viewBox="0 0 16 16" class="bi bi-folder" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z"/>
-                    <path fill-rule="evenodd" d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z"/>
-                </svg>
-                
-                <span>Notes</span>
-                
-                <!--
-                <svg  viewBox="0 0 16 16" class="bi bi-arrow-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
-                </svg>
-                -->
-            </div>
-            <div id="notes_container">
-                <!--
-                <div class="note nav_item">
-                    <span>Heyshdffffffffffffffffffffffffff</span>
+                <div class="nav_icon">
+                    <img src="Images/logo.png">
+                    <span>YTNote</span>
                 </div>
-                <div class="note nav_item">
-                    <span>Heyshdffffffffffffffffffffffffff</span>
-                </div>
-                <div class="note nav_item">
-                    <span>Heyshdffffffffffffffffffffffffff</span>
-                </div>
-                <div class="note nav_item">
-                    <span>Heyshdffffffffffffffffffffffffff</span>
-                </div>
-                <div class="note nav_item" id="note_add_new">
-                    <svg viewBox="0 0 16 16" class="bi bi-journal-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
-                        <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
-                        <path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5z"/>
-                    </svg>
-                    <span>Add new</span>
-                </div>
-                -->
-            </div>
-            <div id="bottom_buttons_container">
-                
-                <div id="expand_nav_btn" class="button_control">
-                
-                    <svg viewBox="0 0 16 16" class="bi bi-arrow-bar-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5zM10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5z"/>
-                    </svg>
-                </div>
-                <div id="collapse_nav_btn" class="button_control">
+                <div class="nav_item">
                     
-                    <svg viewBox="0 0 16 16" class="bi bi-arrow-bar-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M6 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L12.293 7.5H6.5A.5.5 0 0 0 6 8zm-2.5 7a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5z"/>
+                    
+                    <svg  viewBox="0 0 16 16" class="bi bi-upload" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                        <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
                     </svg>
+                    
+                    
+                    <span>Import</span>
                 </div>
-                <div class="button_control" id="nav_float_left">
-                    <svg viewBox="0 0 16 16" class="bi bi-align-start" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M1.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5z"/>
-                        <path d="M3 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7z"/>
+                <div class="nav_item">
+                    
+                    <svg viewBox="0 0 16 16" class="bi bi-download" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                        <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
                     </svg>
+                    
+                    <span>Export</span>
                 </div>
-                <div class="button_control" id="nav_float_right">
-                    <svg viewBox="0 0 16 16" class="bi bi-align-end" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M14.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5z"/>
-                        <path d="M13 7a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7z"/>
+                <div class="nav_item" id="expand_notes">
+                    
+                    <svg viewBox="0 0 16 16" class="bi bi-folder" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z"/>
+                        <path fill-rule="evenodd" d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z"/>
                     </svg>
+                    
+                    <span>Notes</span>
+                    
+                    
                 </div>
-            </div>
-            
-            
-        </nav>
-        <main>
-            <div id="player_div">
+                <div id="notes_container">
+                    
+                </div>
+                <div id="bottom_buttons_container">
+                    
+                    <div id="expand_nav_btn" class="button_control">
+                    
+                        <svg viewBox="0 0 16 16" class="bi bi-arrow-bar-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5zM10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5z"/>
+                        </svg>
+                    </div>
+                    <div id="collapse_nav_btn" class="button_control">
+                        
+                        <svg viewBox="0 0 16 16" class="bi bi-arrow-bar-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M6 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L12.293 7.5H6.5A.5.5 0 0 0 6 8zm-2.5 7a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5z"/>
+                        </svg>
+                    </div>
+                    <div class="button_control" id="nav_float_left">
+                        <svg viewBox="0 0 16 16" class="bi bi-align-start" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M1.5 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13a.5.5 0 0 1 .5-.5z"/>
+                            <path d="M3 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7z"/>
+                        </svg>
+                    </div>
+                    <div class="button_control" id="nav_float_right">
+                        <svg viewBox="0 0 16 16" class="bi bi-align-end" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M14.5 1a.5.5 0 0 0-.5.5v13a.5.5 0 0 0 1 0v-13a.5.5 0 0 0-.5-.5z"/>
+                            <path d="M13 7a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7z"/>
+                        </svg>
+                    </div>
+                </div>
                 
-            </div>
-            <div id="notes_div">
-                <p>HHHAHFHHAFHFAHFHFA</p>
-            </div>
-            <div id="input_div">
-                <p>HHHAHFHHAFHFAHFHFA</p>
-            </div>
-            <div class = "modall">
-                <span id="close_modall">×</span>
-                <div class="modall-content">
-                    <form id="search_form">
-
-                        <div class="form-group">
-                            <label>Note heading name</label>
-                            <input class="form-control" id="heading_input" >
-                        </div>
-
-                        <div class="form-group" id="search_form_group" >
-                            
-                            <label>Youtube video link</label>
-                            <div style="position:relative;width:100%;">
-                                <input class="form-control" id="search_input" >
+                
+            </nav>
+            <main>
+                <div id="player_div">
+                    
+                </div>
+                <div id="notes_div">
+                    <p>HHHAHFHHAFHFAHFHFA</p>
+                </div>
+                <div id="input_div">
+                    <p>HHHAHFHHAFHFAHFHFA</p>
+                </div>
+                <div id="add_modall" class = "modall">
+                    <span class="close_modall">×</span>
+                    <div class="modall-content">
+                        <form id="search_form">
+    
+                            <div class="form-group">
+                                <label>Note heading name</label>
+                                <input class="form-control" id="heading_input" >
+                            </div>
+    
+                            <div class="form-group" id="search_form_group" >
+                                
+                                <label>Youtube video link</label>
+                                <div style="position:relative;width:100%;">
+                                    <input class="form-control" id="search_input" >
+                                    
+                                </div>
+                                <p style="color:green"></p>
+                                
                                 
                             </div>
-                            <p style="color:green"></p>
+                            <button type="button" class="btn btn-primary" id="create_note_btn">
+                                Create
+                            </button>
                             
-                            
-                        </div>
-                        <button type="button" class="btn btn-primary" id="create_note_btn">
-                            Create
-                        </button>
-                        
-                    </form>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </main>
-        
-    </div>
-</body>
+                <div id="delete_modall" class = "modall">
+                    <span class="close_modall">×</span>
+                    <div class="modall-content">
+                        <div id="delete_container">
+                            <p>Select notes that you want to delete</p>
+                        
+                            <div id="notes_to_delete_container">
+    
+                            </div>
+                            <button type="button" class="btn btn-danger" id="delete_notes_btn">
+                                Delete
+                            </button>
+                        </div>
+                        
+                    </div>
+                </div>
+            </main>
+            
+        </div>
+    </body>
+</html>

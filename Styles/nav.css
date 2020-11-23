@@ -1,4 +1,4 @@
-nav #notes_container, nav .nav_icon, nav .nav_item {
+.nav_item, nav #notes_container, nav .nav_icon {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
@@ -22,26 +22,7 @@ nav {
   word-break: break-all;
 }
 nav span {
-  font-family: "Lato", "Roboto", sans-serif;
   font-size: max(24px, calc(20px + 0.4vw));
-}
-nav .nav_item {
-  width: 100%;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: all 0.25s;
-  padding: 8px;
-}
-nav .nav_item svg {
-  width: max(24px, calc(20px + 0.4vw));
-  height: max(24px, calc(20px + 0.4vw));
-}
-nav .nav_item span {
-  margin-left: 8px;
-}
-nav .nav_item:hover {
-  background-color: #fafafa;
-  color: #343232;
 }
 nav .nav_icon {
   max-width: 100%;
@@ -58,7 +39,9 @@ nav #expand_nav_btn {
 }
 nav #notes_container {
   display: none;
-  margin-top: 8px;
+  margin-top: 9px;
+  border-top: 2px solid #c8c6c6;
+  padding-top: 6px;
 }
 nav #notes_container span {
   font-size: max(18px, calc(14px + 0.4vw));
@@ -81,12 +64,38 @@ nav #bottom_buttons_container svg {
   */
 }
 nav .button_control {
-  transition: all 0.25s;
+  transition: all 0.2s;
   padding: 8px;
   border-radius: 4px;
   cursor: pointer;
 }
 nav .button_control:hover {
+  background-color: #fafafa;
+  color: #343232;
+}
+
+.nav_item {
+  width: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+  padding: 8px;
+  margin-top: 2px;
+}
+.nav_item svg {
+  width: max(24px, calc(20px + 0.4vw));
+  height: max(24px, calc(20px + 0.4vw));
+}
+.nav_item span {
+  margin-left: 8px;
+}
+
+.nav_item:hover {
+  background-color: #fafafa;
+  color: #343232;
+}
+
+.nav_item.selected {
   background-color: #fafafa;
   color: #343232;
 }

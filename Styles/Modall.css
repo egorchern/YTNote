@@ -15,7 +15,7 @@
   /* Black w/ opacity */
   overflow-y: auto;
 }
-.modall #close_modall {
+.modall .close_modall {
   user-select: none;
   color: #bbb;
   position: fixed;
@@ -27,7 +27,7 @@
   cursor: pointer;
   text-decoration: none;
 }
-.modall #close_modall:hover {
+.modall .close_modall:hover {
   color: #f1f1f1;
 }
 
