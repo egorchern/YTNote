@@ -25,7 +25,7 @@ html {
     overflow-y: auto;
 }
 *{
-    font-family: "Lato", sans-serif;
+    font-family: "Lato", sans-serif !important;
     word-wrap: break-word;
 }
 main{
@@ -59,7 +59,7 @@ main{
             
         }
         input, span{
-            font-size: max(20px, calc(16px + 0.4vw))
+            font-size: max(20px, calc(16px + 0.4vw)) !important;
 
         }
         
@@ -79,6 +79,48 @@ main{
     #player_div{
         width: 100%;
         height: 100%;
+    }
+    #note_input{
+        width:100%;
+        height: 70%;
+        border:none;
+        background-image:none;
+        background-color:transparent;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        text-align: initial;
+        color: hsl(0, 2%, 98%);
+        resize: none;
+    }
+    #note_input:focus{
+        outline: none;
+    }
+    #input_div{
+        display: flex;
+        flex-flow: column nowrap;
+    }
+    #controls_container{
+        flex-grow: 1;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-end;
+        align-items: center;
+        svg{
+            width: max(24px, calc((20px + 0.4vw) * 1.35));
+            height: max(24px, calc((20px + 0.4vw) * 1.35));
+        }
+    }
+    #submit_note{
+        cursor: pointer;
+        
+        border-radius: 4px;
+        transition: all 0.2s;
+        padding: 8px 8px 8px 2.5px;
+    }
+    #submit_note:hover{
+        background-color:hsl(0, 2%, 98%);
+        color:hsl(0,2%,20%) ;
     }
     
 }

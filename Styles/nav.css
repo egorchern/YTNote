@@ -87,7 +87,7 @@ nav .button_control:hover {
 }
 .nav_item span {
   margin-left: 8px;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
 }
 
 .nav_item:hover {
