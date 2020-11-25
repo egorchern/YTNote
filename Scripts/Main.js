@@ -222,17 +222,15 @@ function load_note(id){
                         player.seekTo(current_note.video_time);
                         set_video_time_interval();
                         
-                    }/*,
+                    },
                     "onStateChange": function(event){
                         let status = event.data;
-                        if(status != 1){
-                            clearInterval(player_time_interval);
-                        }
-                        else{
-                            set_video_time_interval();
+                        if(status === 0){
+                            player.seekTo(0);
+
                         }
                     }
-                    */
+                    
                 
                 }
             });
