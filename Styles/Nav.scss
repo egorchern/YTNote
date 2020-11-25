@@ -13,7 +13,7 @@
 
 $nav_font_size: max(24px, calc(20px + 0.4vw));
 $nav_background_color: hsl(0,2%,20%);
-$nav_note_font_size: max(18px, calc(14px + 0.4vw));
+$nav_note_font_size: max(19px, calc(15px + 0.4vw));
 $nav_font_color: hsl(0, 2%, 98%);
 $nav_padding: 14px;
 
@@ -31,7 +31,7 @@ nav{
     width:17%;
     min-width:168px;
     max-width: 215px;
-    word-break: break-all;
+    
     span{
         
         font-size: $nav_font_size;
@@ -109,6 +109,7 @@ nav{
     span{
 
         margin-left: 8px;
+        letter-spacing: 1px;
         
     }
 }

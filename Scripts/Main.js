@@ -1,11 +1,17 @@
 let nav_float_state;
 let all_notes_data;
+let current_note_index_displayed = -1;
+let current_note;
+let player, player_time_interval;
 let selected_indexes = [];
 
 function $(selector){
     return document.querySelector(selector);
 }
 
+function $all(selector){
+    return document.querySelectorAll(selector);
+}
 // each note_data: note_heading_name, youtube_id, video_time, notes_text_array, notes_time_array, current_text
 class note{
     constructor(note_heading_name, youtube_id){
@@ -168,6 +174,82 @@ function delete_notes_at_indexes(indexes){
 
 }
 
+function set_video_time_interval(){
+    clearInterval(player_time_interval);
+    player_time_interval = setInterval(function(){
+        current_note.video_time = player.getCurrentTime();
+        console.log(current_note.video_time);
+    }, 400)
+}
+
+function save_current_note(){
+    clearInterval(set_video_time_interval);
+    current_note.video_time = player.getCurrentTime();
+    all_notes_data[current_note_index_displayed] = current_note;
+    set_notes_data();
+}
+
+// Load a note
+function load_note(id){
+    let {groups : {index}} = /note_(?<index>\d+)/.exec(id);
+    index = Number(index);
+    if (index != current_note_index_displayed){
+        if(current_note_index_displayed != -1){
+            save_current_note();
+        }
+        current_note_index_displayed = index;
+        current_note = all_notes_data[index];
+        
+        player = null;
+        $('#player_container').innerHTML = `
+        <div id="player_div">
+
+        </div>
+        `;
+        
+        window.YT.ready(function() {
+            player = new YT.Player('player_div', {
+                height: '1',
+                width: '1',
+                videoId: current_note.youtube_id,
+                playerVars:{
+
+                    "autoplay": 1
+                    
+                },
+                events: {
+                    "onReady": function(event){
+                        player.seekTo(current_note.video_time);
+                        set_video_time_interval();
+                        
+                    }/*,
+                    "onStateChange": function(event){
+                        let status = event.data;
+                        if(status != 1){
+                            clearInterval(player_time_interval);
+                        }
+                        else{
+                            set_video_time_interval();
+                        }
+                    }
+                    */
+                
+                }
+            });
+            
+            
+        });
+        window.onbeforeunload = function(){
+            if(current_note_index_displayed != -1){
+                save_current_note();
+            }
+            return null;
+        };
+        
+        
+    }
+}
+
 //Bind events to nav buttons
 function bind_events_on_nav(){
     $("#expand_nav_btn").onclick = function(){
@@ -242,7 +324,14 @@ function bind_events_on_nav(){
         
         
     }
+    $all(".note").forEach(function (item){
+        item.onclick = function(){
+            load_note(item.id);
+        };
+    })
+    
 }
+
 
 //Bind events for expanding, collapsing and changing float types on nav
 function init(){
