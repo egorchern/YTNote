@@ -4,6 +4,7 @@ let current_note_index_displayed = -1;
 let current_note;
 let player, player_time_interval;
 let selected_indexes = [];
+let times_to_display = [];
 
 function $(selector){
     return document.querySelector(selector);
@@ -189,6 +190,33 @@ function save_current_note(){
     set_notes_data();
 }
 
+function add_notes_to_dom(){
+    $("#notes_div").innerHTML = `
+    <div id="notes_body_container">
+
+    </div>
+    `;
+    let dom_string = ``;
+    for(let i = 0; i < current_note.notes_text_array.length; i += 1){
+        dom_string += `
+        <div class="individual_note">
+            <div>
+                <span class="individual_note_time">
+                    [${times_to_display[i]}]
+                </span>
+            </div>
+            <div style="margin-top:4px;">
+                <span class="individual_note_text">
+                    ${current_note.notes_text_array[i]}
+                </span>
+            </div>
+            
+        </div>
+        `
+    }
+    $('#notes_body_container').innerHTML = dom_string;
+}
+
 // Load a note
 function load_note(id){
     let {groups : {index}} = /note_(?<index>\d+)/.exec(id);
@@ -199,7 +227,8 @@ function load_note(id){
         }
         current_note_index_displayed = index;
         current_note = all_notes_data[index];
-        
+        compile_times_to_display();
+        add_notes_to_dom();
         player = null;
         
         $('#input_div').innerHTML = `
@@ -213,6 +242,8 @@ function load_note(id){
             </div>
         </div>
         `;
+        $('#note_input').value = current_note.current_text;
+
         $('#submit_note').onclick = record_note;
         $('#player_container').innerHTML = `
         <div id="player_div">
@@ -254,6 +285,8 @@ function load_note(id){
 
 
         window.onbeforeunload = function(){
+            let text_to_save = $("#note_input").value;
+            current_note.current_text = text_to_save;
             if(current_note_index_displayed != -1){
                 save_current_note();
             }
@@ -264,6 +297,70 @@ function load_note(id){
     }
 }
 
+function convert_seconds_to_time(seconds_string){
+    let whole = Math.floor(Number(seconds_string));
+    let hours, minutes, seconds;
+    seconds = whole;
+    minutes = Math.floor(seconds / 60);
+    hours = Math.floor(minutes / 60);
+    minutes = minutes % 60;
+    seconds = seconds % 60;
+    let time_string = "";
+    
+    if(hours < 10){
+        time_string += "0"
+    }
+    time_string += String(hours);
+    time_string += ":";
+    
+    
+    
+    if(minutes < 10){
+        time_string += "0"
+    }
+    time_string += String(minutes);
+    
+    time_string += ":";
+    
+    if(seconds < 10){
+        time_string += "0"
+    }
+    time_string += String(seconds);
+    
+    return time_string;
+}
+
+function sort_current_note_arrays(){
+    let arr_b = current_note.notes_text_array;
+    let arr_a = current_note.notes_time_array;
+    let arr_c = times_to_display;
+    for(let i = 0; i < arr_a.length; i += 1){
+        for(let j = 0; j < arr_a.length - i - 1; j += 1){
+            if(arr_a[j] > arr_a[j + 1]){
+                let left_a = arr_a[j];
+                arr_a[j] = arr_a[j + 1];
+                arr_a[j + 1] = left_a;
+                let left_b = arr_b[j];
+                arr_b[j] = arr_b[j + 1];
+                arr_b[j + 1] = left_b;
+                let left_c = arr_c[j];
+                arr_c[j] = arr_c[j + 1];
+                arr_c[j + 1] = left_c;
+            }
+        }
+    }
+    current_note.notes_text_array = arr_b;
+    current_note.notes_time_array = arr_a;
+    times_to_display = arr_c
+}
+function compile_times_to_display(){
+    times_to_display = [];
+    for(let i = 0; i < current_note.notes_text_array.length; i += 1){
+        let video_time = current_note.notes_time_array[i];
+        let temp = convert_seconds_to_time(video_time);
+        times_to_display.push(temp);
+    }
+}
 function record_note(){
     let current_text = $("#note_input").value;
     if(current_text != ""){
@@ -272,6 +369,11 @@ function record_note(){
         
         current_note.notes_text_array.push(current_note.current_text);
         current_note.notes_time_array.push(video_time);
+        let temp = convert_seconds_to_time(video_time);
+        times_to_display.push(temp);
+        sort_current_note_arrays();
+        add_notes_to_dom();
+        $("#note_input").value = "";
     }
     else{
         alert("Can't save empty note!");
