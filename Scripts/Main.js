@@ -5,6 +5,7 @@ let current_note;
 let player, player_time_interval;
 let selected_indexes = [];
 let times_to_display = [];
+let selected_dom_note_id = "";
 
 function $(selector){
     return document.querySelector(selector);
@@ -190,7 +191,14 @@ function save_current_note(){
     set_notes_data();
 }
 
-function add_notes_to_dom(){
+function remove_note_instance_from_current(index){
+    current_note.notes_text_array.splice(index);
+    current_note.notes_time_array.splice(index);
+    times_to_display.splice(index);
+    add_notes_to_main();
+}
+
+function add_notes_to_main(){
     $("#notes_div").innerHTML = `
     <div id="notes_body_container">
 
@@ -199,7 +207,8 @@ function add_notes_to_dom(){
     let dom_string = ``;
     for(let i = 0; i < current_note.notes_text_array.length; i += 1){
         dom_string += `
-        <div class="individual_note">
+        <div class="individual_note" id="main_note_${i}" style="position:relative">
+            <img src="Images/delete_icon.png" class="delete_main_note_btn" title="delete this note">
             <div>
                 <span class="individual_note_time">
                     [${times_to_display[i]}]
@@ -215,6 +224,36 @@ function add_notes_to_dom(){
         `
     }
     $('#notes_body_container').innerHTML = dom_string;
+    $all(".individual_note").forEach(individual_note => {
+        
+        individual_note.onclick = function(){
+            if(individual_note.id != selected_dom_note_id || selected_dom_note_id === ""){
+                $all(".individual_note").forEach(individual_note_temp => {
+                    individual_note_temp.classList.remove("selected");
+                    $("#" + individual_note_temp.id + " .delete_main_note_btn").style.display = "none";
+                })
+                individual_note.classList.toggle("selected");
+                let {groups : {index}} = /main_note_(?<index>\d+)/.exec(individual_note.id);
+                index = Number(index);
+                player.seekTo(current_note.notes_time_array[index]);
+                selected_dom_note_id = individual_note.id;
+                $("#" + individual_note.id + " .delete_main_note_btn").style.display = "inline";
+            }
+            
+            
+        }
+        
+        
+    })
+    $all(".delete_main_note_btn").forEach(temp => {
+        temp.onclick = function(){
+            let {groups : {index}} = /main_note_(?<index>\d+)/.exec(selected_dom_note_id);
+            index = Number(index);
+            remove_note_instance_from_current(index);
+        }
+        
+    })
+    
 }
 
 // Load a note
@@ -228,7 +267,7 @@ function load_note(id){
         current_note_index_displayed = index;
         current_note = all_notes_data[index];
         compile_times_to_display();
-        add_notes_to_dom();
+        add_notes_to_main();
         player = null;
         
         $('#input_div').innerHTML = `
@@ -372,7 +411,7 @@ function record_note(){
         let temp = convert_seconds_to_time(video_time);
         times_to_display.push(temp);
         sort_current_note_arrays();
-        add_notes_to_dom();
+        add_notes_to_main();
         $("#note_input").value = "";
     }
     else{

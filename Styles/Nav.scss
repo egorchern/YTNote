@@ -65,10 +65,11 @@ nav{
         display:flex;
     }
     #bottom_buttons_container{
-        position: absolute;
-        bottom: 8px;
+        
         display:flex;
         flex-flow: row wrap;
+        align-items: flex-end;
+        flex-grow: 1;
         svg{
             
             width: max(24px, calc((20px + 0.4vw) * 1.65));
@@ -147,9 +148,12 @@ nav.collapsed{
     }
     #bottom_buttons_container{
         display: block !important;
+        position: absolute;
+        bottom: 8px;
     }
     #expand_nav_btn{
         display: block !important;
+
     }
     #collapse_nav_btn{
         display:none !important;

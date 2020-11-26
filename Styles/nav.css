@@ -49,10 +49,10 @@ nav #notes_container.shown {
   display: flex;
 }
 nav #bottom_buttons_container {
-  position: absolute;
-  bottom: 8px;
   display: flex;
   flex-flow: row wrap;
+  align-items: flex-end;
+  flex-grow: 1;
 }
 nav #bottom_buttons_container svg {
   width: max(24px, calc((20px + 0.4vw) * 1.65));
@@ -129,6 +129,8 @@ nav.collapsed > * {
 }
 nav.collapsed #bottom_buttons_container {
   display: block !important;
+  position: absolute;
+  bottom: 8px;
 }
 nav.collapsed #expand_nav_btn {
   display: block !important;
