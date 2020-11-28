@@ -1,3 +1,4 @@
+// TODO: FIX DELETE SMALL NOTE BUG, FIX IMPORTING NOT DELETING PREVIOUS DATA
 let nav_float_state;
 let all_notes_data;
 let current_note_index_displayed = -1;
@@ -24,6 +25,64 @@ class note{
         this.notes_time_array = [];
         this.current_text = "";
     }
+}
+function import_notes_data(){
+    let element = document.createElement("input");
+    element.setAttribute("type", "file");
+    element.setAttribute("id", "file_dialog")
+    element.style.display = "none";
+    element.onchange = function(){
+        let file = this.files[0];
+        try{
+                let text = file.text().then(
+                    text => {
+                        
+                        let parsed = JSON.parse(text);
+                        let sample = parsed[0];
+                        
+                        let defs = Object.keys(sample);
+                        if(defs.includes("note_heading_name") === true && defs.includes("youtube_id") === true && defs.includes("video_time") === true && defs.includes("notes_text_array") && defs.includes("notes_time_array") === true && defs.includes("current_text") === true){
+                            all_notes_data = parsed;
+                            set_notes_data();
+                            add_notes_to_nav();
+                        }
+                        else{
+                            alert("File corrupted, some headings missing.")
+                        }
+                    }
+                )
+        }
+        catch(err){
+            alert("Wrong file imported! Make sure you select YTNote_data.txt that you got from exporting");
+        }
+        
+    }
+    document.body.appendChild(element);
+    
+    element.click();
+    
+
+
+    
+    
+}
+function export_notes_data(){
+    if(current_note_index_displayed != -1){
+        save_current_note();
+    }
+    
+    let text = JSON.stringify(all_notes_data, null, "\t");
+    let filename = "YTNote_data.txt";
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
 }
 
 // retrieve all notes data;
@@ -175,17 +234,56 @@ function delete_notes_at_indexes(indexes){
     all_notes_data = new_list;
 
 }
-
+/*
+function get_nearest_note_index(){
+    let video_time = current_note.video_time;
+    let distances = [];
+    let least_dist_index = 0;
+    let arr_a = current_note.notes_time_array;
+    for(let i = 0; i < arr_a.length; i += 1){
+        let temp = Math.abs(arr_a[i] - video_time);
+        distances.push(temp);
+        
+    }
+    console.log(distances);
+    for(let i = 0; i < distances.length; i += 1){
+        if(distances[i] < distances[least_dist_index]){
+            least_dist_index = i;
+        }
+    }
+    return least_dist_index;
+}
+*/
+/*
 function set_video_time_interval(){
     clearInterval(player_time_interval);
     player_time_interval = setInterval(function(){
         current_note.video_time = player.getCurrentTime();
         
-    }, 400)
-}
 
+    }, 200)
+}
+*/
+/*
+function select_note_on_index(index){
+
+    if(individual_note.id != selected_dom_note_id || selected_dom_note_id === ""){
+        $all(".individual_note").forEach(individual_note_temp => {
+            individual_note_temp.classList.remove("selected");
+            $("#" + individual_note_temp.id + " .delete_main_note_btn").style.display = "none";
+        })
+        individual_note.classList.toggle("selected");
+        let {groups : {index}} = /main_note_(?<index>\d+)/.exec(individual_note.id);
+        index = Number(index);
+        player.seekTo(current_note.notes_time_array[index]);
+        selected_dom_note_id = individual_note.id;
+        $("#" + individual_note.id + " .delete_main_note_btn").style.display = "inline";
+    }
+}
+*/
 function save_current_note(){
-    clearInterval(set_video_time_interval);
+    let text_to_save = $("#note_input").value;
+    current_note.current_text = text_to_save;
     current_note.video_time = player.getCurrentTime();
     all_notes_data[current_note_index_displayed] = current_note;
     set_notes_data();
@@ -197,7 +295,40 @@ function remove_note_instance_from_current(index){
     times_to_display.splice(index);
     add_notes_to_main();
 }
-
+function load_help_page(){
+    if(current_note_index_displayed != -1){
+        save_current_note();
+    }
+    current_note = null;
+    current_note_index_displayed = -1;
+    let player_text = `
+    <div style="display:flex; flex-flow: column; align-items: center; overflow:auto">
+        <p>To create a note-project, click on "Notes" button in the navigation menu and then click on "Add new" button. In the menu displayed, please enter a heading name for your note-project and a youtube link. After that, press "Create" button.</p>
+        <p>To open a specific note-project, click on "Notes" button in the navigation menu and then click on the individual note-project that you want to open. They will have the same name, as the one you inputted in the note-project creating menu.</p>
+        <p>To delete one or more note-projects, click on "Notes" button in the navigation menu and then click on the "Delete" button. In the menu displayed, click on note-project(s) that you want to delete. Then press "Delete button". This process is irreversible, and if you have not exported your data before doing this, notes for those specific note-projects that you selected will be lost! </p>
+        <p>This webpage utilizes LocalStorage to store all the data. Please note that cleaning browser's cache might erase the localStorage, but it depends on the browser. LocalStorage is unique to every browser, so you will not see any notes made when visiting this website from a different browser. You can export your data by clicking "Export" button in the navigation menu, this would let you download your notes data in JSON. You can then Import note data by pressing the "Import" button in the navigation Menu</p>
+        <p>You can exit or reload the page whenever you need to. All of the data (video time, currently typed text and notes) will be saved automatically</p>
+        <p>After launching a note-project, YouTube video will be here</p>
+        <img src="Images/video_pic.PNG" style="max-width:95%">
+    </div>
+    `;
+    let notes_text = `
+    <div style="display:flex; flex-flow: column; align-items: center; overflow:auto">
+        <p>Your notes will be here</p>
+        <img src="Images/note_pic.PNG" style="max-width:95%">
+    </div>
+    `;
+    let input_text = `
+    <div style="display:flex; flex-flow: column; align-items: center; overflow:auto">
+        <p>You will be able to type a note here</p>
+        <img src="Images/input_pic.PNG" style="max-width:95%">
+    </div>
+    `;
+    $("#player_container").style.overflow = "auto";
+    $("#player_container").innerHTML = player_text;
+    $("#notes_div").innerHTML = notes_text;
+    $("#input_div").innerHTML = input_text;
+}
 function add_notes_to_main(){
     $("#notes_div").innerHTML = `
     <div id="notes_body_container">
@@ -264,6 +395,7 @@ function load_note(id){
         if(current_note_index_displayed != -1){
             save_current_note();
         }
+        $("#player_container").style.overflow = "unset";
         current_note_index_displayed = index;
         current_note = all_notes_data[index];
         compile_times_to_display();
@@ -295,15 +427,13 @@ function load_note(id){
                 height: '1',
                 width: '1',
                 videoId: current_note.youtube_id,
-                playerVars:{
-
-                    "autoplay": 1
-                    
+                playerVars : {
+                    "autoplay": 0
                 },
                 events: {
                     "onReady": function(event){
                         player.seekTo(current_note.video_time);
-                        set_video_time_interval();
+                        //set_video_time_interval();
                         
                     },
                     "onStateChange": function(event){
@@ -324,8 +454,7 @@ function load_note(id){
 
 
         window.onbeforeunload = function(){
-            let text_to_save = $("#note_input").value;
-            current_note.current_text = text_to_save;
+            
             if(current_note_index_displayed != -1){
                 save_current_note();
             }
@@ -456,6 +585,7 @@ function bind_events_on_nav(){
         add_new_note();
     }
     $('#note_delete').onclick = function(){
+        load_help_page();
         add_notes_to_delete_menu();
         selected_indexes = [];
         $('#delete_modall').style.display = "flex";
@@ -487,11 +617,19 @@ function bind_events_on_nav(){
         else{
             delete_notes_at_indexes(selected_indexes);
             set_notes_data();
+            
             add_notes_to_nav();
             $('#delete_modall').style.display = "none";
+            
         }
         
         
+    }
+    $('#export_btn').onclick = export_notes_data;
+    $("#import_btn").onclick = import_notes_data;
+    $("#help_page_btn").onclick = function(){
+        
+        load_help_page();
     }
     $all(".note").forEach(function (item){
         item.onclick = function(){
@@ -531,6 +669,7 @@ function init(){
 
     all_notes_data = get_notes_data();
     add_notes_to_nav();
+    load_help_page();
     
     
     

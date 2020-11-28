@@ -311,8 +311,6 @@ main #submit_note:hover {
   color: #343232;
 }
 main #notes_body_container {
-  width: 100%;
-  height: 100%;
   overflow: auto;
 }
 main #notes_div {
@@ -332,7 +330,7 @@ main .individual_note:hover {
 }
 main .individual_note.selected {
   background-color: #666666;
-  cursor: text;
+  cursor: default;
 }
 main .delete_main_note_btn {
   max-width: 20px;
