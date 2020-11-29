@@ -330,7 +330,6 @@ main .individual_note:hover {
 }
 main .individual_note.selected {
   background-color: #666666;
-  cursor: default;
 }
 main .delete_main_note_btn {
   max-width: 20px;

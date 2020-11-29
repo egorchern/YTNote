@@ -1,4 +1,4 @@
-// TODO: FIX DELETE SMALL NOTE BUG, FIX IMPORTING NOT DELETING PREVIOUS DATA
+// TODO: FIX IMPORTING NOT DELETING PREVIOUS DATA
 let nav_float_state;
 let all_notes_data;
 let current_note_index_displayed = -1;
@@ -27,16 +27,17 @@ class note{
     }
 }
 function import_notes_data(){
+    load_help_page();
     let element = document.createElement("input");
     element.setAttribute("type", "file");
     element.setAttribute("id", "file_dialog")
     element.style.display = "none";
     element.onchange = function(){
         let file = this.files[0];
-        try{
-                let text = file.text().then(
-                    text => {
-                        
+        
+            let text = file.text().then(
+                text => {
+                    try{
                         let parsed = JSON.parse(text);
                         let sample = parsed[0];
                         
@@ -50,11 +51,13 @@ function import_notes_data(){
                             alert("File corrupted, some headings missing.")
                         }
                     }
-                )
-        }
-        catch(err){
-            alert("Wrong file imported! Make sure you select YTNote_data.txt that you got from exporting");
-        }
+                    catch(err){
+                        alert("Selected file is not supported by this webpage. Please only select the file that you have previously exported from this page.")
+                    }
+                }
+            )
+        
+        
         
     }
     document.body.appendChild(element);
@@ -67,9 +70,7 @@ function import_notes_data(){
     
 }
 function export_notes_data(){
-    if(current_note_index_displayed != -1){
-        save_current_note();
-    }
+    load_help_page();
     
     let text = JSON.stringify(all_notes_data, null, "\t");
     let filename = "YTNote_data.txt";
@@ -290,9 +291,9 @@ function save_current_note(){
 }
 
 function remove_note_instance_from_current(index){
-    current_note.notes_text_array.splice(index);
-    current_note.notes_time_array.splice(index);
-    times_to_display.splice(index);
+    current_note.notes_text_array.splice(index, 1);
+    current_note.notes_time_array.splice(index, 1);
+    times_to_display.splice(index, 1);
     add_notes_to_main();
 }
 function load_help_page(){
@@ -354,22 +355,28 @@ function add_notes_to_main(){
         </div>
         `
     }
+    
     $('#notes_body_container').innerHTML = dom_string;
     $all(".individual_note").forEach(individual_note => {
         
-        individual_note.onclick = function(){
-            if(individual_note.id != selected_dom_note_id || selected_dom_note_id === ""){
-                $all(".individual_note").forEach(individual_note_temp => {
-                    individual_note_temp.classList.remove("selected");
-                    $("#" + individual_note_temp.id + " .delete_main_note_btn").style.display = "none";
-                })
-                individual_note.classList.toggle("selected");
-                let {groups : {index}} = /main_note_(?<index>\d+)/.exec(individual_note.id);
-                index = Number(index);
-                player.seekTo(current_note.notes_time_array[index]);
-                selected_dom_note_id = individual_note.id;
-                $("#" + individual_note.id + " .delete_main_note_btn").style.display = "inline";
-            }
+        individual_note.onclick = function(ev){
+            
+            $all(".individual_note").forEach(individual_note_temp => {
+                individual_note_temp.classList.remove("selected");
+                $("#" + individual_note_temp.id + " .delete_main_note_btn").style.display = "none";
+            })
+            individual_note.classList.toggle("selected");
+            let {groups : {index}} = /main_note_(?<index>\d+)/.exec(individual_note.id);
+            index = Number(index);
+            player.seekTo(current_note.notes_time_array[index]);
+            
+            $("#" + individual_note.id + " .delete_main_note_btn").style.display = "inline";
+            
+            selected_dom_note_id = individual_note.id;
+
+            
+            
+            
             
             
         }
@@ -377,7 +384,8 @@ function add_notes_to_main(){
         
     })
     $all(".delete_main_note_btn").forEach(temp => {
-        temp.onclick = function(){
+        temp.onclick = function(ev){
+            ev.stopPropagation()
             let {groups : {index}} = /main_note_(?<index>\d+)/.exec(selected_dom_note_id);
             index = Number(index);
             remove_note_instance_from_current(index);
@@ -430,6 +438,10 @@ function load_note(id){
                 playerVars : {
                     "autoplay": 0
                 },
+                autoplay: 0,
+                autoplay: "0",
+                autoplay: "false",
+                autoplay: false,
                 events: {
                     "onReady": function(event){
                         player.seekTo(current_note.video_time);
@@ -599,7 +611,7 @@ function bind_events_on_nav(){
                 console.log(index);
                 if(item.classList.contains("selected") === true){
                     let index_to_delete = selected_indexes.findIndex(temp => {temp === index});
-                    selected_indexes.splice(index_to_delete);
+                    selected_indexes.splice(index_to_delete, 1);
                 }
                 else{
                     selected_indexes.push(index);
