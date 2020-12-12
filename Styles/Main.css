@@ -344,3 +344,9 @@ main .individual_note_time {
   word-break: normal;
   font-weight: bolder;
 }
+
+@keyframes appear {
+  100% {
+    opacity: 1;
+  }
+}
