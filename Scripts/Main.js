@@ -7,6 +7,8 @@ let player, player_time_interval;
 let selected_indexes = [];
 let times_to_display = [];
 let selected_dom_note_id = "";
+let interval_before_opacity = 150;
+let appear_animation_time = "0.5s";
 
 function $(selector){
     return document.querySelector(selector);
@@ -85,7 +87,14 @@ function export_notes_data(){
 
     document.body.removeChild(element);
 }
+function bind_appear_animation(element_id){
+    let element = $(element_id);
+    console.log(element);
+    element.style.animationName = "appear";
+    element.style.animationDuration = appear_animation_time;
+    element.style.animationFillMode = "forwards";
 
+}
 // retrieve all notes data;
 function get_notes_data(){
     let notes_data = localStorage.getItem("all_notes_data");
@@ -303,7 +312,7 @@ function load_help_page(){
     current_note = null;
     current_note_index_displayed = -1;
     let player_text = `
-    <div style="display:flex; flex-flow: column; align-items: center; overflow:auto">
+    <div style="display:flex; flex-flow: column; align-items: center; overflow:auto; opacity:0">
         <p>To create a note-project, click on "Notes" button in the navigation menu and then click on "Add new" button. In the menu displayed, please enter a heading name for your note-project and a youtube link. After that, press "Create" button.</p>
         <p>To open a specific note-project, click on "Notes" button in the navigation menu and then click on the individual note-project that you want to open. They will have the same name, as the one you inputted in the note-project creating menu.</p>
         <p>To delete one or more note-projects, click on "Notes" button in the navigation menu and then click on the "Delete" button. In the menu displayed, click on note-project(s) that you want to delete. Then press "Delete button". This process is irreversible, and if you have not exported your data before doing this, notes for those specific note-projects that you selected will be lost! </p>
@@ -314,13 +323,13 @@ function load_help_page(){
     </div>
     `;
     let notes_text = `
-    <div style="display:flex; flex-flow: column; align-items: center; overflow:auto">
+    <div style="display:flex; flex-flow: column; align-items: center; overflow:auto; opacity:0">
         <p>Your notes will be here</p>
         <img src="Images/note_pic.PNG" style="max-width:95%">
     </div>
     `;
     let input_text = `
-    <div style="display:flex; flex-flow: column; align-items: center; overflow:auto">
+    <div style="display:flex; flex-flow: column; align-items: center; overflow:auto; opacity:0">
         <p>You will be able to type a note here</p>
         <img src="Images/input_pic.PNG" style="max-width:95%">
     </div>
@@ -329,10 +338,16 @@ function load_help_page(){
     $("#player_container").innerHTML = player_text;
     $("#notes_div").innerHTML = notes_text;
     $("#input_div").innerHTML = input_text;
+    setTimeout(function(){
+        bind_appear_animation("#player_container div");
+        bind_appear_animation("#notes_div div");
+        bind_appear_animation("#input_div div");
+    }, interval_before_opacity);
+    
 }
 function add_notes_to_main(){
     $("#notes_div").innerHTML = `
-    <div id="notes_body_container">
+    <div id="notes_body_container" style="opacity:0">
 
     </div>
     `;
@@ -357,6 +372,9 @@ function add_notes_to_main(){
     }
     
     $('#notes_body_container').innerHTML = dom_string;
+    setTimeout(function(){
+        bind_appear_animation('#notes_body_container');
+    }, interval_before_opacity);
     $all(".individual_note").forEach(individual_note => {
         
         individual_note.onclick = function(ev){
@@ -411,16 +429,21 @@ function load_note(id){
         player = null;
         
         $('#input_div').innerHTML = `
-        <textarea id="note_input"></textarea>
-        <div id="controls_container">
-            <div id="submit_note">
-                <svg viewBox="0 0 16 16" class="bi bi-box-arrow-in-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
-                    <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-                </svg>
+        <div style="opacity:0">
+            <textarea id="note_input"></textarea>
+            <div id="controls_container">
+                <div id="submit_note">
+                    <svg viewBox="0 0 16 16" class="bi bi-box-arrow-in-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
+                        <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                    </svg>
+                </div>
             </div>
         </div>
         `;
+        setTimeout(function(){
+            bind_appear_animation('#input_div > div');
+        }, interval_before_opacity);
         $('#note_input').value = current_note.current_text;
 
         $('#submit_note').onclick = record_note;
@@ -429,7 +452,7 @@ function load_note(id){
 
         </div>
         `;
-        
+        $("#player_div").style.opacity = "0";
         window.YT.ready(function() {
             player = new YT.Player('player_div', {
                 height: '1',
@@ -462,6 +485,9 @@ function load_note(id){
             
             
         });
+        setTimeout(function(){
+            bind_appear_animation('#player_div');
+        }, interval_before_opacity);
         
 
 
