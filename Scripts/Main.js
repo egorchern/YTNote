@@ -319,19 +319,19 @@ function load_help_page(){
         <p>This webpage utilizes LocalStorage to store all the data. Please note that cleaning browser's cache might erase the localStorage, but it depends on the browser. LocalStorage is unique to every browser, so you will not see any notes made when visiting this website from a different browser. You can export your data by clicking "Export" button in the navigation menu, this would let you download your notes data in JSON. You can then Import note data by pressing the "Import" button in the navigation Menu</p>
         <p>You can exit or reload the page whenever you need to. All of the data (video time, currently typed text and notes) will be saved automatically</p>
         <p>After launching a note-project, YouTube video will be here</p>
-        <img src="Images/video_pic.PNG" style="max-width:95%">
+        <img src="Images/video_pic.webp" style="max-width:95%">
     </div>
     `;
     let notes_text = `
     <div style="display:flex; flex-flow: column; align-items: center; overflow:auto; opacity:0">
         <p>Your notes will be here</p>
-        <img src="Images/note_pic.PNG" style="max-width:95%">
+        <img src="Images/note_pic.webp" style="max-width:95%">
     </div>
     `;
     let input_text = `
     <div style="display:flex; flex-flow: column; align-items: center; overflow:auto; opacity:0">
         <p>You will be able to type a note here</p>
-        <img src="Images/input_pic.PNG" style="max-width:95%">
+        <img src="Images/input_pic.webp" style="max-width:95%">
     </div>
     `;
     $("#player_container").style.overflow = "auto";
