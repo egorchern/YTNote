@@ -89,7 +89,7 @@ function export_notes_data(){
 }
 function bind_appear_animation(element_id){
     let element = $(element_id);
-    console.log(element);
+    
     element.style.animationName = "appear";
     element.style.animationDuration = appear_animation_time;
     element.style.animationFillMode = "forwards";
@@ -347,7 +347,7 @@ function load_help_page(){
 }
 function add_notes_to_main(){
     $("#notes_div").innerHTML = `
-    <div id="notes_body_container" style="opacity:0">
+    <div id="notes_body_container">
 
     </div>
     `;
@@ -372,9 +372,7 @@ function add_notes_to_main(){
     }
     
     $('#notes_body_container').innerHTML = dom_string;
-    setTimeout(function(){
-        bind_appear_animation('#notes_body_container');
-    }, interval_before_opacity);
+    
     $all(".individual_note").forEach(individual_note => {
         
         individual_note.onclick = function(ev){
@@ -429,7 +427,7 @@ function load_note(id){
         player = null;
         
         $('#input_div').innerHTML = `
-        <div style="opacity:0">
+        <div style="opacity:0; display:flex; flex-direction:column; height:100%;" >
             <textarea id="note_input"></textarea>
             <div id="controls_container">
                 <div id="submit_note">
@@ -444,8 +442,12 @@ function load_note(id){
         setTimeout(function(){
             bind_appear_animation('#input_div > div');
         }, interval_before_opacity);
+        
         $('#note_input').value = current_note.current_text;
-
+        $("#notes_body_container").style.opacity = "0";
+        setTimeout(function(){
+            bind_appear_animation('#notes_body_container');
+        }, interval_before_opacity);
         $('#submit_note').onclick = record_note;
         $('#player_container').innerHTML = `
         <div id="player_div">
@@ -634,7 +636,7 @@ function bind_events_on_nav(){
             item.onclick = function(){
                 let {groups : {index}} = /note_delete_(?<index>\d+)/.exec(item.id);
                 index = Number(index);
-                console.log(index);
+                
                 if(item.classList.contains("selected") === true){
                     let index_to_delete = selected_indexes.findIndex(temp => {temp === index});
                     selected_indexes.splice(index_to_delete, 1);
