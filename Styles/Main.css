@@ -198,6 +198,12 @@ nav.collapsed #nav_float_right {
     transform: scale(1);
   }
 }
+main #input_container, main #notes_body_container, main #player_div {
+  animation-duration: 0.8s;
+  animation-delay: 0.2s;
+  animation-fill-mode: forwards;
+}
+
 body,
 html {
   width: 100%;
@@ -213,7 +219,7 @@ html {
   /*background-color: hsl(0deg, 0%, 90%);*/
   background-color: #171717;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 * {
@@ -268,6 +274,7 @@ main #search_form button, main #delete_container button {
 main #player_div {
   width: 100%;
   height: 100%;
+  animation-name: zoom_in;
 }
 main #note_input {
   width: 100%;
@@ -311,10 +318,18 @@ main #submit_note:hover {
   color: #343232;
 }
 main #notes_body_container {
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  animation-name: fadeInRight;
+}
+main #input_container {
+  overflow-y: auto;
+  overflow-x: hidden;
+  animation-name: fadeInUp;
 }
 main #notes_div {
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 main .individual_note {
   padding: 7px;
@@ -345,6 +360,15 @@ main .individual_note_time {
   font-weight: bolder;
 }
 
+@keyframes zoom_in {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 @keyframes appear {
   100% {
     opacity: 1;

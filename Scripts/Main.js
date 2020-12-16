@@ -312,7 +312,7 @@ function load_help_page(){
     current_note = null;
     current_note_index_displayed = -1;
     let player_text = `
-    <div style="display:flex; flex-flow: column; align-items: center; overflow:auto; opacity:0">
+    <div id="player_div" style="display:flex; flex-flow: column; align-items: center; overflow:auto; opacity:0">
         <p>To create a note-project, click on "Notes" button in the navigation menu and then click on "Add new" button. In the menu displayed, please enter a heading name for your note-project and a youtube link. After that, press "Create" button.</p>
         <p>To open a specific note-project, click on "Notes" button in the navigation menu and then click on the individual note-project that you want to open. They will have the same name, as the one you inputted in the note-project creating menu.</p>
         <p>To delete one or more note-projects, click on "Notes" button in the navigation menu and then click on the "Delete" button. In the menu displayed, click on note-project(s) that you want to delete. Then press "Delete button". This process is irreversible, and if you have not exported your data before doing this, notes for those specific note-projects that you selected will be lost! </p>
@@ -323,13 +323,13 @@ function load_help_page(){
     </div>
     `;
     let notes_text = `
-    <div style="display:flex; flex-flow: column; align-items: center; overflow:auto; opacity:0">
+    <div id="notes_body_container" style="display:flex; flex-flow: column; align-items: center; overflow:auto; opacity:0">
         <p>Your notes will be here</p>
         <img src="Images/note_pic.webp" style="max-width:95%">
     </div>
     `;
     let input_text = `
-    <div style="display:flex; flex-flow: column; align-items: center; overflow:auto; opacity:0">
+    <div id="input_container" style="display:flex; flex-flow: column; align-items: center; overflow:auto; opacity:0">
         <p>You will be able to type a note here</p>
         <img src="Images/input_pic.webp" style="max-width:95%">
     </div>
@@ -338,11 +338,7 @@ function load_help_page(){
     $("#player_container").innerHTML = player_text;
     $("#notes_div").innerHTML = notes_text;
     $("#input_div").innerHTML = input_text;
-    setTimeout(function(){
-        bind_appear_animation("#player_container div");
-        bind_appear_animation("#notes_div div");
-        bind_appear_animation("#input_div div");
-    }, interval_before_opacity);
+    
     
 }
 function add_notes_to_main(){
@@ -355,7 +351,7 @@ function add_notes_to_main(){
     for(let i = 0; i < current_note.notes_text_array.length; i += 1){
         dom_string += `
         <div class="individual_note" id="main_note_${i}" style="position:relative">
-            <img src="Images/delete_icon.png" class="delete_main_note_btn" title="delete this note">
+            <img src="Images/delete_icon.webp" class="delete_main_note_btn" title="delete this note">
             <div>
                 <span class="individual_note_time">
                     [${times_to_display[i]}]
@@ -427,7 +423,7 @@ function load_note(id){
         player = null;
         
         $('#input_div').innerHTML = `
-        <div style="opacity:0; display:flex; flex-direction:column; height:100%;" >
+        <div id="input_container"style="opacity:0; display:flex; flex-direction:column; height:100%;" >
             <textarea id="note_input"></textarea>
             <div id="controls_container">
                 <div id="submit_note">
@@ -439,15 +435,11 @@ function load_note(id){
             </div>
         </div>
         `;
-        setTimeout(function(){
-            bind_appear_animation('#input_div > div');
-        }, interval_before_opacity);
+        
         
         $('#note_input').value = current_note.current_text;
         $("#notes_body_container").style.opacity = "0";
-        setTimeout(function(){
-            bind_appear_animation('#notes_body_container');
-        }, interval_before_opacity);
+        
         $('#submit_note').onclick = record_note;
         $('#player_container').innerHTML = `
         <div id="player_div">
@@ -460,9 +452,7 @@ function load_note(id){
                 height: '1',
                 width: '1',
                 videoId: current_note.youtube_id,
-                playerVars : {
-                    "autoplay": 0
-                },
+                playerVars: { 'autoplay': 1, 'controls': 1,'autohide':1,'wmode':'opaque' },
                 autoplay: 0,
                 autoplay: "0",
                 autoplay: "false",
@@ -470,7 +460,11 @@ function load_note(id){
                 events: {
                     "onReady": function(event){
                         player.seekTo(current_note.video_time);
-                        //set_video_time_interval();
+                        player.playVideo();
+                        setTimeout(function(){
+                            player.pauseVideo();
+                        }, 100)
+                        
                         
                     },
                     "onStateChange": function(event){
@@ -487,9 +481,7 @@ function load_note(id){
             
             
         });
-        setTimeout(function(){
-            bind_appear_animation('#player_div');
-        }, interval_before_opacity);
+        
         
 
 

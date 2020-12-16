@@ -4,9 +4,16 @@
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
     border: 1.5px solid rgba(0, 0, 0, 0.125);
 }
+
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,400;0,500;1,400;1,500&display=swap');
 
-
+$animation_duration: 0.8s;
+$animation_delay: 0.2s;
+%default_animation_params{
+    animation-duration: $animation_duration;
+    animation-delay: $animation_delay;
+    animation-fill-mode: forwards;
+}
 body,
 html {
     width: 100%;
@@ -22,7 +29,7 @@ html {
     /*background-color: hsl(0deg, 0%, 90%);*/
     background-color: hsl(0,0%,9%);
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 *{
     font-family: "Lato", sans-serif !important;
@@ -79,6 +86,8 @@ main{
     #player_div{
         width: 100%;
         height: 100%;
+        @extend %default_animation_params;
+        animation-name: zoom_in;
     }
     #note_input{
         width:100%;
@@ -124,11 +133,21 @@ main{
     }
     #notes_body_container{
         
-        overflow: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
+        @extend %default_animation_params;
+        animation-name: fadeInRight;
         
     }
+    #input_container{
+        overflow-y: auto;
+        overflow-x: hidden;
+        @extend %default_animation_params;
+        animation-name: fadeInUp;
+    }
     #notes_div{
-        overflow: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
     .individual_note{
         padding: 7px;
@@ -164,7 +183,16 @@ main{
     
 
 }
-
+@keyframes zoom_in{
+    0%{
+        transform: scale(0);
+        
+    }
+    100%{
+        transform: scale(1);
+        opacity: 1;
+    }
+}
 @keyframes appear{
     100%{
         opacity: 1;
