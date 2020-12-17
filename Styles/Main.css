@@ -38,16 +38,17 @@ nav #expand_nav_btn {
   display: none;
 }
 nav #notes_container {
-  display: none;
+  transition: height 0.6s cubic-bezier(0.47, 0, 0.745, 0.715);
+  height: 0;
+  overflow: hidden;
   margin-top: 9px;
-  border-top: 2px solid #c8c6c6;
   padding-top: 6px;
 }
 nav #notes_container span {
   font-size: max(19px, calc(15px + 0.4vw));
 }
 nav #notes_container.shown {
-  display: flex;
+  border-top: 2px solid #c8c6c6;
 }
 nav #bottom_buttons_container {
   display: flex;

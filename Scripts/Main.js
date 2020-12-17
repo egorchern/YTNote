@@ -458,7 +458,7 @@ function load_note(id){
                         player.seekTo(current_note.video_time);
                         
                         
-                        player.pauseVideo();
+                        
                         
                         
                         
@@ -580,6 +580,8 @@ function record_note(){
 function bind_events_on_nav(){
     $("#expand_nav_btn").onclick = function(){
         $("nav").classList.toggle("collapsed");
+        
+
     }
     $("#collapse_nav_btn").onclick = function(){
         $("nav").classList.toggle("collapsed");
@@ -605,6 +607,18 @@ function bind_events_on_nav(){
     }
     $("#expand_notes").onclick = function(ev){
         $("#notes_container").classList.toggle("shown");
+        const slideDown = elem => elem.style.height = `${elem.scrollHeight}px`;
+        const slideUp = elem => {
+            elem.style.height = `0px`;
+        }
+        if($("#notes_container").classList.contains("shown")){
+            slideDown(document.getElementById("notes_container"));
+            
+        }
+        else{
+            slideUp(document.getElementById("notes_container"));
+        }
+        
     }
     $('#note_add_new').onclick = function(ev){
         $("#add_modall").style.display = "flex";

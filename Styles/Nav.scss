@@ -53,16 +53,20 @@ nav{
     }
     #notes_container{
         @extend %align_content_perfectly;
-        display:none;
+        
+        transition:height 0.6s cubic-bezier(0.47, 0, 0.745, 0.715);
+        height:0;
+        overflow:hidden;
         margin-top:9px;
-        border-top: 2px solid hsl(0,2%, 78%);
+        
         padding-top:6px;
         span{
             font-size: $nav_note_font_size;
         }
     }
     #notes_container.shown{
-        display:flex;
+        border-top: 2px solid hsl(0,2%, 78%);
+        //display:flex;
     }
     #bottom_buttons_container{
         
