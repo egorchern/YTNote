@@ -453,17 +453,13 @@ function load_note(id){
                 width: '1',
                 videoId: current_note.youtube_id,
                 playerVars: { 'autoplay': 1, 'controls': 1,'autohide':1,'wmode':'opaque' },
-                autoplay: 0,
-                autoplay: "0",
-                autoplay: "false",
-                autoplay: false,
                 events: {
                     "onReady": function(event){
                         player.seekTo(current_note.video_time);
-                        player.playVideo();
-                        setTimeout(function(){
-                            player.pauseVideo();
-                        }, 100)
+                        
+                        
+                        player.pauseVideo();
+                        
                         
                         
                     },
