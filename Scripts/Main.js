@@ -179,6 +179,10 @@ function set_user_preffered_float(preffered){
 // Add all notes to nav menu
 function add_notes_to_nav(){
     $('#notes_container').innerHTML = "";
+    let elem = $('#notes_container');
+    elem.classList.remove("shown");
+    elem.style.height = "0px";
+    elem.style.visibility = "hidden";
     let add_note_string = `
     <div class="nav_item" id="note_add_new">
         <svg viewBox="0 0 16 16" class="bi bi-journal-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -212,8 +216,11 @@ function add_notes_to_nav(){
     dom_string += add_note_string;
     dom_string += delete_note_string;
     $('#notes_container').innerHTML = dom_string;
+    
+    
+    
     bind_events_on_nav();
-        
+    
     
 }
 
@@ -366,7 +373,7 @@ function add_notes_to_main(){
         </div>
         `
     }
-    
+    $('#notes_body_container').style.opacity = "0";
     $('#notes_body_container').innerHTML = dom_string;
     
     $all(".individual_note").forEach(individual_note => {
@@ -607,6 +614,7 @@ function bind_events_on_nav(){
     }
     $("#expand_notes").onclick = function(ev){
         $("#notes_container").classList.toggle("shown");
+        $("#notes_container").style.visibility = "visible";
         const slideDown = elem => elem.style.height = `${elem.scrollHeight}px`;
         const slideUp = elem => {
             elem.style.height = `0px`;
